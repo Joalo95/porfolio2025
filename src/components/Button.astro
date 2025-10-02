@@ -1,0 +1,94 @@
+---
+// src/components/atoms/Button.astro
+export interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'icon';
+  icon?: string;
+  class?: string;
+}
+
+const { href, variant = 'primary', icon, class: className = '' } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag 
+  href={href} 
+  class={`btn-futuristic btn-${variant} ${className}`}
+  target={href ? '_blank' : undefined}
+  rel={href ? 'noopener noreferrer' : undefined}
+>
+  {icon && <i class={`fab fa-${icon}`}></i>}
+  <slot />
+</Tag>
+
+<style>
+  .btn-futuristic {
+    position: relative;
+    padding: 0.75rem 2rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #00f0ff;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(138, 43, 226, 0.1));
+    border: 2px solid #00f0ff;
+    border-radius: 0;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  }
+
+  .btn-futuristic::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .btn-futuristic:hover::before {
+    left: 100%;
+  }
+
+  .btn-futuristic:hover {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(138, 43, 226, 0.2));
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), inset 0 0 20px rgba(0, 240, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    color: #ff00ff;
+    border-color: #ff00ff;
+    background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(138, 43, 226, 0.1));
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(138, 43, 226, 0.2));
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.5), inset 0 0 20px rgba(255, 0, 255, 0.1);
+  }
+
+  .btn-secondary::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.4), transparent);
+  }
+
+  .btn-icon {
+    padding: 0.75rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    clip-path: none;
+  }
+
+  .btn-futuristic i {
+    font-size: 1rem;
+  }
+</style>

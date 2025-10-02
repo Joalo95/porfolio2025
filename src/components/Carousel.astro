@@ -1,0 +1,138 @@
+---
+// src/components/Carousel.astro
+import Button from './Button.astro';
+import './Carousel.css';
+
+export interface CarouselItem {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  github?: string;
+  website?: string;
+}
+
+export interface Props {
+  items: CarouselItem[];
+  showButtons?: boolean;
+  carouselId?: string;
+}
+
+const { items, showButtons = false, carouselId = 'carousel-' + Math.random().toString(36).substr(2, 9) } = Astro.props;
+---
+
+<main class="carousel-main" data-carousel-id={carouselId}>
+  <ul class="slider">
+    {items.map((item) => (
+      <li 
+        class="item" 
+        style={`background-image: url('${item.image}')`}
+        data-id={item.id}
+      >
+        <div class="item-overlay"></div>
+        <div class="card-footer-mini">
+          <h3 class="card-title-mini">{item.title}</h3>
+          <p class="card-description-mini">{item.description}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  <article class="content-panel">
+    {items.map((item, index) => (
+      <div class={`content-detail ${index === 1 ? 'active' : ''}`} data-id={item.id}>
+        <h2 class="content-title">{item.title}</h2>
+        <p class="content-description">{item.description}</p>
+        {showButtons && (item.github || item.website) && (
+          <div class="content-buttons">
+            {item.github && (
+              <Button href={item.github} icon="github">
+                Repository
+              </Button>
+            )}
+            {item.website && (
+              <Button href={item.website} variant="secondary" icon="globe">
+                Live Site
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
+    ))}
+  </article>
+
+  <nav class="nav">
+    <Button variant="icon" class="btn next">
+      <ion-icon name="arrow-forward-outline"></ion-icon>
+    </Button>
+  </nav>
+</main>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+<script type="module">
+  function initCarousel(carouselElement) {
+    const slider = carouselElement.querySelector('.slider');
+    const contentDetails = carouselElement.querySelectorAll('.content-detail');
+    const navButton = carouselElement.querySelector('.btn.next');
+
+    function updateContent() {
+      const items = slider.querySelectorAll('.item');
+      const activeItem = items[1];
+      const activeId = activeItem?.getAttribute('data-id');
+      
+      contentDetails.forEach(content => {
+        const contentId = content.getAttribute('data-id');
+        if (contentId === activeId) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+    }
+
+    function activate(e) {
+      const target = e.target.closest('.btn');
+      if (!target) return;
+
+      const items = slider.querySelectorAll('.item');
+      
+      if (target.classList.contains('next')) {
+        // Hide all content immediately
+        contentDetails.forEach(content => {
+          content.classList.remove('active');
+        });
+        
+        // Move the slide
+        slider.append(items[0]);
+        
+        // Wait for transition to complete before showing new content
+        setTimeout(updateContent, 800);
+      }
+    }
+
+    navButton.addEventListener('click', activate, false);
+    updateContent();
+  }
+
+  function initAllCarousels() {
+    const carousels = document.querySelectorAll('.carousel-main');
+    carousels.forEach(carousel => {
+      initCarousel(carousel);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAllCarousels);
+  } else {
+    initAllCarousels();
+  }
+
+  // Re-initialize when tab changes
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('js-sidebar--li')) {
+      setTimeout(initAllCarousels, 100);
+    }
+  });
+</script>

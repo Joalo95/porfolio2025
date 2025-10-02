@@ -1,0 +1,112 @@
+---
+import Carousel from './Carousel.astro';
+import { projects, experiences } from '../lib/data.ts';
+import './Home.scss';
+---
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Portfolio - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="hero">
+            <div class="header">
+                <div class="social">
+                    <button class="social__item">
+                        <i class="fab fa-facebook"></i>
+                    </button>
+                    <button class="social__item">
+                        <i class="fab fa-linkedin"></i>
+                    </button>
+                    <button class="social__item">
+                        <i class="fab fa-instagram"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero--wrp">
+                <div class="hero__block sidebar-section">
+                    <div class="hero__block--left">
+                        <div class="sidebar">
+                            <div class="sidebar__content">
+                                <div class="sidebar--li js-sidebar--li" data-target="tab-1">ABOUT ME</div>
+                                <div class="sidebar--li js-sidebar--li active" data-target="tab-2">PROJECTS</div>
+                                <div class="sidebar--li js-sidebar--li" data-target="tab-3">EXPERIENCE</div>
+                            </div>
+                        </div>
+                        <div class="test-driver">
+                            <span class="test-driver--txt">
+                                AVAILABLE<br>FOR YOU!
+                            </span>
+                            <a href="#" class="test-driver--button">
+                                RESUME
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero__block content-section">
+                    <div class="hero__block--cont">
+                        <!-- About Me Tab -->
+                        <div class="tab-slider js-tab-slider" id="tab-1">
+                            <div class="about-content">
+                                <div class="about-header">
+                                    <h1 class="about-title">ABOUT ME</h1>
+                                    <div class="about-subtitle">Web Developer & Student</div>
+                                </div>
+                                <div class="about-description">
+                                    <p class="about-text">
+                                        Versatile web designer with experience in graphic and web design. 
+                                        My dedication to continually learning about new web design trends and 
+                                        concepts has made me a professional capable of facing any challenge.
+                                    </p>
+                                    <p class="about-text">
+                                        I also have 10 years of experience in sales, so I can help clients solve
+                                        business problems with technological solutions.
+                                    </p>
+                                    <p class="about-text">
+                                        In the field of web development I like to create relevant and original products 
+                                        that improve brand recognition, maintaining a creative mindset that helps companies
+                                        stay updated in a constantly evolving market.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Projects Tab -->
+                        <div class="tab-slider js-tab-slider active" id="tab-2">
+                            <Carousel items={projects} showButtons={true} />
+                        </div>
+
+                        <!-- Experience Tab -->
+                        <div class="tab-slider js-tab-slider" id="tab-3">
+                            <Carousel items={experiences} showButtons={false} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script type="module">
+    $(".js-sidebar--li").click(function (e) {
+        e.preventDefault();
+        const target = $(this).data("target");
+
+        $(".js-sidebar--li").removeClass("active");
+        $(".js-tab-slider").removeClass("active");
+
+        $(this).addClass("active");
+        $(".js-tab-slider#" + target).addClass("active");
+    });
+</script>
