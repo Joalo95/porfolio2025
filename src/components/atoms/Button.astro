@@ -5,9 +5,17 @@ export interface Props {
   variant?: 'primary' | 'secondary' | 'icon';
   icon?: string;
   class?: string;
+  ariaLabel?: string;
 }
 
-const { href, variant = 'primary', icon, class: className = '' } = Astro.props;
+const { 
+  href, 
+  variant = 'primary', 
+  icon, 
+  class: className = '',
+  ariaLabel 
+} = Astro.props;
+
 const Tag = href ? 'a' : 'button';
 ---
 
@@ -16,6 +24,7 @@ const Tag = href ? 'a' : 'button';
   class={`btn-futuristic btn-${variant} ${className}`}
   target={href ? '_blank' : undefined}
   rel={href ? 'noopener noreferrer' : undefined}
+  aria-label={ariaLabel}
 >
   {icon && <i class={`fab fa-${icon}`}></i>}
   <slot />
@@ -91,4 +100,3 @@ const Tag = href ? 'a' : 'button';
   .btn-futuristic i {
     font-size: 1rem;
   }
-</style>

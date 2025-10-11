@@ -1,7 +1,7 @@
 ---
-// src/components/Carousel.astro
-import Button from './Button.astro';
-import './Carousel.css';
+// src/components/organisms/Carousel.astro
+import Button from '../atoms/Button.astro';
+import '../../styles/Carousel.scss';
 
 export interface CarouselItem {
   id: string;
@@ -18,10 +18,15 @@ export interface Props {
   carouselId?: string;
 }
 
-const { items, showButtons = false, carouselId = 'carousel-' + Math.random().toString(36).substr(2, 9) } = Astro.props;
+const { 
+  items, 
+  showButtons = false, 
+  carouselId = 'carousel-' + Math.random().toString(36).substr(2, 9) 
+} = Astro.props;
 ---
 
 <main class="carousel-main" data-carousel-id={carouselId}>
+  <!-- Slider with images -->
   <ul class="slider">
     {items.map((item) => (
       <li 
@@ -38,6 +43,7 @@ const { items, showButtons = false, carouselId = 'carousel-' + Math.random().toS
     ))}
   </ul>
 
+  <!-- Content panel with details -->
   <article class="content-panel">
     {items.map((item, index) => (
       <div class={`content-detail ${index === 1 ? 'active' : ''}`} data-id={item.id}>
@@ -46,12 +52,21 @@ const { items, showButtons = false, carouselId = 'carousel-' + Math.random().toS
         {showButtons && (item.github || item.website) && (
           <div class="content-buttons">
             {item.github && (
-              <Button href={item.github} icon="github">
+              <Button 
+                href={item.github} 
+                icon="github"
+                ariaLabel={`View ${item.title} on GitHub`}
+              >
                 Repository
               </Button>
             )}
             {item.website && (
-              <Button href={item.website} variant="secondary" icon="globe">
+              <Button 
+                href={item.website} 
+                variant="secondary" 
+                icon="globe"
+                ariaLabel={`Visit ${item.title} website`}
+              >
                 Live Site
               </Button>
             )}
@@ -61,8 +76,9 @@ const { items, showButtons = false, carouselId = 'carousel-' + Math.random().toS
     ))}
   </article>
 
+  <!-- Navigation -->
   <nav class="nav">
-    <Button variant="icon" class="btn next">
+    <Button variant="icon" class="btn next" ariaLabel="Next slide">
       <ion-icon name="arrow-forward-outline"></ion-icon>
     </Button>
   </nav>
@@ -72,64 +88,76 @@ const { items, showButtons = false, carouselId = 'carousel-' + Math.random().toS
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 <script type="module">
+  /**
+   * Initialize a single carousel instance
+   * @param {HTMLElement} carouselElement - The carousel container
+   */
   function initCarousel(carouselElement) {
     const slider = carouselElement.querySelector('.slider');
     const contentDetails = carouselElement.querySelectorAll('.content-detail');
     const navButton = carouselElement.querySelector('.btn.next');
 
+    if (!slider || !navButton) return;
+
+    /**
+     * Update active content based on current slide position
+     */
     function updateContent() {
       const items = slider.querySelectorAll('.item');
-      const activeItem = items[1];
+      const activeItem = items[1]; // Second item is always the active one
       const activeId = activeItem?.getAttribute('data-id');
       
       contentDetails.forEach(content => {
         const contentId = content.getAttribute('data-id');
-        if (contentId === activeId) {
-          content.classList.add('active');
-        } else {
-          content.classList.remove('active');
-        }
+        content.classList.toggle('active', contentId === activeId);
       });
     }
 
-    function activate(e) {
+    /**
+     * Handle navigation click event
+     * @param {Event} e - Click event
+     */
+    function handleNavigation(e) {
       const target = e.target.closest('.btn');
-      if (!target) return;
+      if (!target || !target.classList.contains('next')) return;
 
       const items = slider.querySelectorAll('.item');
       
-      if (target.classList.contains('next')) {
-        // Hide all content immediately
-        contentDetails.forEach(content => {
-          content.classList.remove('active');
-        });
-        
-        // Move the slide
-        slider.append(items[0]);
-        
-        // Wait for transition to complete before showing new content
-        setTimeout(updateContent, 800);
-      }
+      // Hide all content immediately for smooth transition
+      contentDetails.forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      // Move first item to end (carousel rotation)
+      slider.append(items[0]);
+      
+      // Wait for CSS transition to complete before showing new content
+      setTimeout(updateContent, 800);
     }
 
-    navButton.addEventListener('click', activate, false);
+    // Attach event listeners
+    navButton.addEventListener('click', handleNavigation, false);
+    
+    // Initialize with correct content displayed
     updateContent();
   }
 
+  /**
+   * Initialize all carousels on the page
+   */
   function initAllCarousels() {
     const carousels = document.querySelectorAll('.carousel-main');
-    carousels.forEach(carousel => {
-      initCarousel(carousel);
-    });
+    carousels.forEach(carousel => initCarousel(carousel));
   }
 
+  // Initialize on page load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAllCarousels);
   } else {
     initAllCarousels();
   }
 
-  // Re-initialize when tab changes
+  // Re-initialize when tab changes (for tab-based navigation)
   document.addEventListener('click', (e) => {
     if (e.target.classList.contains('js-sidebar--li')) {
       setTimeout(initAllCarousels, 100);

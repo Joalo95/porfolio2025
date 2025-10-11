@@ -1,0 +1,237 @@
+// src/styles/_variables.scss
+
+// ============================================
+// COLOR PALETTE
+// ============================================
+$primary-color: #00f0ff !default;
+$secondary-color: #ff00ff !default;
+$accent-purple: #8a2be2 !default;
+$accent-purple-dark: rgba(138, 43, 226, 0.3) !default;
+
+$bg-dark: #0a0a0a !default;
+$bg-dark-alt: #1a1a2e !default;
+$bg-dark-variant: #0f0f1e !default;
+$bg-overlay: rgba(0, 0, 0, 0.8) !default;
+$bg-glass: rgba(0, 0, 0, 0.6) !default;
+
+$text-primary: #ffffff !default;
+$text-secondary: rgba(255, 255, 255, 0.85) !default;
+$text-muted: rgba(255, 255, 255, 0.5) !default;
+
+// ============================================
+// GRADIENTS
+// ============================================
+$gradient-primary: linear-gradient(135deg, rgba($primary-color, 0.1), $accent-purple-dark) !default;
+$gradient-primary-hover: linear-gradient(135deg, rgba($primary-color, 0.2), rgba($accent-purple, 0.2)) !default;
+$gradient-secondary: linear-gradient(135deg, rgba($secondary-color, 0.1), $accent-purple-dark) !default;
+$gradient-secondary-hover: linear-gradient(135deg, rgba($secondary-color, 0.2), rgba($accent-purple, 0.2)) !default;
+$gradient-background: linear-gradient(135deg, $bg-dark 0%, $bg-dark-alt 50%, $bg-dark-variant 100%) !default;
+$gradient-hero: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 30, 0.9) 50%, rgba(20, 0, 40, 0.9) 100%) !default;
+
+// ============================================
+// SPACING SYSTEM
+// ============================================
+$spacing-xs: 0.5rem !default;    // 8px
+$spacing-sm: 1rem !default;      // 16px
+$spacing-md: 1.5rem !default;    // 24px
+$spacing-lg: 2rem !default;      // 32px
+$spacing-xl: 3rem !default;      // 48px
+$spacing-xxl: 4rem !default;     // 64px
+
+// ============================================
+// TYPOGRAPHY
+// ============================================
+$font-primary: 'Orbitron', sans-serif !default;
+$font-secondary: 'Space Mono', monospace !default;
+$font-mono: 'Courier New', monospace !default;
+
+$font-size-xs: 0.65rem !default;
+$font-size-sm: 0.75rem !default;
+$font-size-base: 1rem !default;
+$font-size-md: 1.1rem !default;
+$font-size-lg: 1.3rem !default;
+$font-size-xl: 1.6rem !default;
+$font-size-xxl: 2rem !default;
+$font-size-xxxl: 3rem !default;
+
+$font-weight-normal: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-bold: 700 !default;
+$font-weight-black: 900 !default;
+
+$line-height-tight: 1.3 !default;
+$line-height-base: 1.5 !default;
+$line-height-relaxed: 1.7 !default;
+$line-height-loose: 1.9 !default;
+
+$letter-spacing-tight: 1px !default;
+$letter-spacing-base: 2px !default;
+$letter-spacing-wide: 3px !default;
+$letter-spacing-wider: 5px !default;
+
+// ============================================
+// BORDERS & RADIUS
+// ============================================
+$border-width: 1px !default;
+$border-width-thick: 2px !default;
+
+$border-radius-sm: 10px !default;
+$border-radius-base: 20px !default;
+$border-radius-full: 50% !default;
+
+$border-primary: $border-width-thick solid $primary-color !default;
+$border-secondary: $border-width-thick solid $secondary-color !default;
+$border-subtle: $border-width solid rgba($primary-color, 0.2) !default;
+
+// ============================================
+// SHADOWS & GLOWS
+// ============================================
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.8) !default;
+$shadow-md: 0 10px 20px rgba($primary-color, 0.1) !default;
+$shadow-lg: 0 20px 40px rgba($primary-color, 0.3) !default;
+$shadow-xl: 0 0 100px rgba($primary-color, 0.3) !default;
+
+$glow-sm: 0 0 10px rgba($primary-color, 0.5) !default;
+$glow-md: 0 0 20px rgba($primary-color, 0.6) !default;
+$glow-lg: 0 0 30px rgba($primary-color, 0.8) !default;
+
+$text-shadow-base: 0 0 20px rgba($primary-color, 0.6), 0 3px 8px rgba(0, 0, 0, 0.5) !default;
+$text-shadow-strong: 0 0 30px rgba($primary-color, 0.9) !default;
+
+// ============================================
+// TRANSITIONS & ANIMATIONS
+// ============================================
+$transition-fast: 0.1s !default;
+$transition-base: 0.3s !default;
+$transition-medium: 0.5s !default;
+$transition-slow: 0.75s !default;
+$transition-slower: 0.8s !default;
+
+$easing-default: ease !default;
+$easing-in-out: ease-in-out !default;
+$easing-smooth: cubic-bezier(0.4, 0, 0.2, 1) !default;
+
+// ============================================
+// Z-INDEX LAYERS
+// ============================================
+$z-background: -1 !default;
+$z-base: 0 !default;
+$z-content: 1 !default;
+$z-fullscreen: 2 !default;
+$z-stack-back: 1 !default;
+$z-stack-mid: 2 !default;
+$z-stack-front: 3 !default;
+$z-sidebar: 10 !default;
+$z-content-panel: 50 !default;
+$z-header: 99 !default;
+$z-nav: 100 !default;
+$z-modal: 1000 !default;
+
+// ============================================
+// BREAKPOINTS
+// ============================================
+$breakpoint-xs: 480px !default;
+$breakpoint-sm: 768px !default;
+$breakpoint-md: 992px !default;
+$breakpoint-lg: 1200px !default;
+$breakpoint-xl: 1600px !default;
+
+// ============================================
+// COMPONENT SPECIFIC
+// ============================================
+
+// Carousel
+$carousel-item-width: 200px !default;
+$carousel-item-height: 300px !default;
+$carousel-item-spacing: 220px !default;
+
+// Header
+$header-height: 80px !default;
+$header-height-mobile: 60px !default;
+
+// Sidebar
+$sidebar-width: 250px !default;
+$sidebar-link-height: 180px !default;
+
+// Buttons
+$button-padding: 0.75rem 2rem !default;
+$button-padding-sm: 0.5rem 1.25rem !default;
+$button-icon-size: 3rem !default;
+$button-icon-size-sm: 2.5rem !default;
+
+// ============================================
+// MIXINS
+// ============================================
+@mixin glow-effect($color: $primary-color, $intensity: 0.3) {
+  box-shadow: 0 20px 40px rgba($color, $intensity);
+  border: $border-width solid rgba($color, $intensity * 0.7);
+}
+
+@mixin text-glow($color: $primary-color, $blur: 20px) {
+  text-shadow: 0 0 $blur rgba($color, 0.6),
+               0 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+@mixin gradient-overlay($from: rgba(0, 0, 0, 0.9), $to: transparent, $direction: to top) {
+  background: linear-gradient($direction, $from 0%, $to 50%);
+}
+
+@mixin glass-effect {
+  background: $bg-glass;
+  backdrop-filter: blur(10px);
+  border: $border-subtle;
+}
+
+@mixin clip-corner($size: 10px) {
+  clip-path: polygon(
+    $size 0, 
+    100% 0, 
+    100% calc(100% - $size), 
+    calc(100% - $size) 100%, 
+    0 100%, 
+    0 $size
+  );
+}
+
+@mixin hover-lift($distance: 3px) {
+  transition: transform $transition-base $easing-default;
+  
+  &:hover {
+    transform: translateY(-$distance);
+  }
+}
+
+@mixin futuristic-border {
+  border: $border-primary;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba($primary-color, 0.4), transparent);
+    transition: left $transition-medium $easing-default;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+// Responsive breakpoint mixin
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: $breakpoint-xs) { @content; }
+  } @else if $breakpoint == sm {
+    @media (max-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (max-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (max-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl {
+    @media (max-width: $breakpoint-xl) { @content; }
+  }
+}

@@ -1,0 +1,9 @@
+// src/styles/index.scss
+// Archivo principal que re-exporta todas las variables y mixins
+
+@forward 'variables';
+
+// Importar estilos globales si los tienes
+// @use 'global';
+// @use 'utilities';
+// @use 'animations';

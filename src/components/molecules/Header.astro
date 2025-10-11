@@ -1,0 +1,65 @@
+---
+// src/components/molecules/Header.astro
+import Logo from '../atoms/Logo.astro';
+import SocialButton from '../atoms/SocialButton.astro';
+
+export interface SocialLink {
+  icon: string;
+  href: string;
+  label: string;
+}
+
+export interface Props {
+  socialLinks?: SocialLink[];
+}
+
+const { socialLinks = [] } = Astro.props;
+---
+
+<header class="header">
+  <Logo />
+  
+  <nav class="social-nav">
+    {socialLinks.map((link) => (
+      <SocialButton 
+        icon={link.icon} 
+        href={link.href}
+        ariaLabel={link.label}
+      />
+    ))}
+  </nav>
+</header>
+
+<style>
+  .header {
+    width: 100%;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 99;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+  }
+
+  .social-nav {
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      height: 60px;
+    }
+
+    .social-nav {
+      margin-right: 1rem;
+      gap: 0.5rem;
+    }
+  }
+</style>

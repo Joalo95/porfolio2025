@@ -1,0 +1,126 @@
+// src/styles/home.scss
+@use 'variables' as *;
+
+// ============================================
+// GLOBAL RESET
+// ============================================
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-secondary;
+  overflow-x: hidden;
+}
+
+// ============================================
+// WRAPPER & CONTAINER
+// ============================================
+.wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background: $gradient-background;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg;
+}
+
+// ============================================
+// HERO SECTION
+// ============================================
+.hero {
+  width: 100%;
+  max-width: 1600px;
+  height: 90vh;
+  min-height: 700px;
+  box-shadow: $shadow-xl;
+  overflow: hidden;
+  position: relative;
+  background: $bg-overlay;
+  border: $border-subtle;
+
+  &--wrp {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    background: $gradient-hero;
+  }
+
+  &__block {
+    height: 100%;
+    z-index: $z-content;
+
+    &--cont {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    &--left {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+// ============================================
+// LAYOUT SECTIONS
+// ============================================
+.sidebar-section {
+  width: $sidebar-width;
+  border-right: $border-subtle;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.content-section {
+  flex: 1;
+}
+
+.tab-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+// ============================================
+// RESPONSIVE DESIGN
+// ============================================
+@include respond-to(lg) {
+  .hero {
+    height: auto;
+    min-height: 800px;
+  }
+}
+
+@include respond-to(md) {
+  .hero--wrp {
+    flex-direction: column;
+  }
+
+  .sidebar-section {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: $border-subtle;
+  }
+}
+
+@include respond-to(sm) {
+  .wrapper {
+    padding: 0;
+  }
+
+  .hero {
+    height: 100vh;
+    min-height: auto;
+  }
+}

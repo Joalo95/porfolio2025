@@ -1,0 +1,63 @@
+---
+// src/components/atoms/SocialButton.astro
+export interface Props {
+  icon: string;
+  href?: string;
+  ariaLabel: string;
+}
+
+const { icon, href, ariaLabel } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag 
+  class="social-button" 
+  href={href}
+  target={href ? '_blank' : undefined}
+  rel={href ? 'noopener noreferrer' : undefined}
+  aria-label={ariaLabel}
+>
+  <i class={`fab fa-${icon}`}></i>
+</Tag>
+
+<style>
+  .social-button {
+    color: #00f0ff;
+    font-size: 1.2rem;
+    width: 45px;
+    height: 45px;
+    background: rgba(0, 240, 255, 0.1);
+    border: 2px solid rgba(0, 240, 255, 0.3);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    text-decoration: none;
+  }
+
+  .social-button:hover {
+    background: rgba(0, 240, 255, 0.2);
+    border-color: #00f0ff;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 768px) {
+    .social-button {
+      width: 35px;
+      height: 35px;
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .social-button {
+      width: 30px;
+      height: 30px;
+      font-size: 0.9rem;
+    }
+  }
+</style>

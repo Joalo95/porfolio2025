@@ -1,0 +1,122 @@
+---
+// src/components/organisms/TabContent.astro
+export interface Props {
+  tabId: string;
+  active?: boolean;
+}
+
+const { tabId, active = false } = Astro.props;
+---
+
+<div class={`tab-slider js-tab-slider ${active ? 'active' : ''}`} id={tabId}>
+  <slot />
+</div>
+
+<style lang="scss">
+  @use '../../styles/variables' as *;
+
+  .tab-slider {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(50px);
+    transition: all 0.5s $easing-in-out;
+
+    // Borde animado futurista
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      background: linear-gradient(135deg, $primary-color, $secondary-color, $accent-purple) border-box;
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) padding-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.5s $easing-in-out;
+      pointer-events: none;
+    }
+
+    // Efecto de glow en las esquinas
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, 
+        rgba($primary-color, 0.3) 0%, 
+        transparent 30%, 
+        transparent 70%, 
+        rgba($secondary-color, 0.3) 100%
+      );
+      border-radius: 4px;
+      opacity: 0;
+      filter: blur(20px);
+      transition: opacity 0.5s $easing-in-out;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    &.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+
+      &::before {
+        opacity: 1;
+        animation: borderGlow 3s ease-in-out infinite;
+      }
+
+      &::after {
+        opacity: 0.6;
+        animation: glowPulse 3s ease-in-out infinite;
+      }
+    }
+  }
+
+  // Animación del borde gradiente
+  @keyframes borderGlow {
+    0%, 100% {
+      filter: brightness(1) saturate(1);
+    }
+    50% {
+      filter: brightness(1.3) saturate(1.5);
+    }
+  }
+
+  // Animación del glow exterior
+  @keyframes glowPulse {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+  }
+
+  // Responsive
+  @include respond-to(md) {
+    .tab-slider {
+      &::before,
+      &::after {
+        border-radius: 0;
+      }
+    }
+  }
+
+  @include respond-to(sm) {
+    .tab-slider {
+      transform: translateX(30px);
+
+      &::after {
+        filter: blur(15px);
+      }
+    }
+  }
+</style>

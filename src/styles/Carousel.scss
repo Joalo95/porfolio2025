@@ -1,0 +1,440 @@
+// src/styles/carousel.scss
+@use 'variables' as *;
+
+// ============================================
+// CAROUSEL MAIN CONTAINER
+// ============================================
+.carousel-main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+}
+
+// ============================================
+// CONTENT PANEL - LEFT SIDE
+// ============================================
+.content-panel {
+  position: absolute;
+  left: $spacing-lg;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(30vw, 400px);
+  z-index: $z-content-panel;
+  pointer-events: none;
+}
+
+.content-detail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  display: none;
+  pointer-events: none;
+  transition: none;
+
+  &.active {
+    display: block;
+    opacity: 0;
+    pointer-events: auto;
+    animation: fadeInContent $transition-slow $easing-in-out forwards;
+  }
+}
+
+@keyframes fadeInContent {
+  0% {
+    filter: blur(5px);
+    transform: translateY(75px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.content-title {
+  font-family: $font-primary;
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-black;
+  color: $primary-color;
+  margin: 0 0 $spacing-sm 0;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-wide;
+  @include text-glow($primary-color);
+}
+
+.content-description {
+  font-family: $font-secondary;
+  font-size: 0.95rem;
+  color: $text-primary;
+  line-height: $line-height-relaxed;
+  margin: 0 0 $spacing-md 0;
+  text-shadow: $shadow-sm;
+}
+
+.content-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  align-items: flex-start;
+}
+
+// ============================================
+// SLIDER CONTAINER
+// ============================================
+.slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// ============================================
+// CAROUSEL ITEMS
+// ============================================
+.item {
+  width: $carousel-item-width;
+  height: $carousel-item-height;
+  list-style-type: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: $z-stack-back;
+  background-position: center;
+  background-size: cover;
+  border-radius: $border-radius-base;
+  transition: transform $transition-fast, 
+              left $transition-slow, 
+              top $transition-slow, 
+              width $transition-slow, 
+              height $transition-slow, 
+              border-radius $transition-slow, 
+              opacity $transition-slow;
+  overflow: hidden;
+}
+
+// Glass effect overlay
+.item-overlay {
+  position: absolute;
+  inset: 0;
+  @include gradient-overlay();
+  opacity: 0;
+  transition: opacity $transition-slow;
+}
+
+// Card footer for stacked items
+.card-footer-mini {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: $spacing-sm;
+  @include gradient-overlay(rgba(0, 0, 0, 0.95));
+  opacity: 0;
+  transition: opacity $transition-slow;
+}
+
+.card-title-mini {
+  font-family: $font-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  color: $primary-color;
+  margin: 0 0 0.3rem 0;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-tight;
+  text-shadow: 0 0 10px rgba($primary-color, 0.8);
+}
+
+.card-description-mini {
+  font-family: $font-mono;
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: $line-height-tight;
+  text-shadow: $shadow-sm;
+}
+
+// ============================================
+// ITEM POSITIONS - FULLSCREEN
+// ============================================
+.item:nth-child(1),
+.item:nth-child(2) {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  border-radius: 0;
+  opacity: 1;
+  z-index: $z-fullscreen;
+
+  .item-overlay,
+  .card-footer-mini {
+    opacity: 0;
+  }
+}
+
+// ============================================
+// ITEM POSITIONS - PERSPECTIVE STACK
+// ============================================
+.item:nth-child(3) {
+  left: 50%;
+  z-index: $z-stack-front;
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  @include glow-effect($primary-color, 0.3);
+
+  .item-overlay,
+  .card-footer-mini {
+    opacity: 1;
+  }
+}
+
+.item:nth-child(4) {
+  left: calc(50% + #{$carousel-item-spacing});
+  z-index: $z-stack-mid;
+  opacity: 0.8;
+  transform: translateY(-50%) scale(0.9);
+  @include glow-effect($primary-color, 0.2);
+
+  .item-overlay,
+  .card-footer-mini {
+    opacity: 1;
+  }
+}
+
+.item:nth-child(5) {
+  left: calc(50% + #{$carousel-item-spacing * 2});
+  z-index: $z-stack-back;
+  opacity: 0.5;
+  transform: translateY(-50%) scale(0.8);
+  @include glow-effect($primary-color, 0.1);
+
+  .item-overlay,
+  .card-footer-mini {
+    opacity: 1;
+  }
+}
+
+.item:nth-child(6) {
+  left: calc(50% + 600px);
+  opacity: 0.3;
+  z-index: $z-base;
+  transform: translateY(-50%) scale(0.7);
+
+  .item-overlay,
+  .card-footer-mini {
+    opacity: 1;
+  }
+}
+
+// ============================================
+// NAVIGATION
+// ============================================
+.nav {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: $z-nav;
+  user-select: none;
+}
+
+// ============================================
+// RESPONSIVE DESIGN
+// ============================================
+
+// Large screens
+@include respond-to(lg) {
+  .content-panel {
+    width: min(35vw, 350px);
+    left: $spacing-md;
+  }
+
+  .content-title {
+    font-size: $font-size-xl;
+  }
+
+  .content-description {
+    font-size: 0.85rem;
+  }
+
+  .item {
+    width: 180px;
+    height: 270px;
+
+    &:nth-child(4) {
+      left: calc(50% + 200px);
+    }
+
+    &:nth-child(5) {
+      left: calc(50% + 380px);
+    }
+
+    &:nth-child(6) {
+      left: calc(50% + 540px);
+    }
+  }
+
+  .nav {
+    right: 3%;
+  }
+}
+
+// Tablets
+@include respond-to(md) {
+  .content-panel {
+    position: relative;
+    left: 0;
+    top: auto;
+    transform: none;
+    width: 100%;
+    max-width: 500px;
+    margin: $spacing-md auto;
+    padding: 0 $spacing-md;
+  }
+
+  .carousel-main {
+    flex-direction: column;
+  }
+
+  .slider {
+    height: 400px;
+  }
+
+  .item:nth-child(1),
+  .item:nth-child(2) {
+    position: relative;
+    width: 100%;
+    height: 400px;
+  }
+
+  .content-title {
+    font-size: $font-size-lg;
+    text-align: center;
+  }
+
+  .content-description {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .content-buttons {
+    align-items: center;
+    width: 100%;
+  }
+}
+
+// Mobile landscape
+@include respond-to(sm) {
+  .content-panel {
+    padding: 0 1.5rem;
+  }
+
+  .content-title {
+    font-size: 1.3rem;
+  }
+
+  .content-description {
+    font-size: 0.85rem;
+  }
+
+  .slider {
+    height: 350px;
+  }
+
+  .item {
+    width: 150px;
+    height: 220px;
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      height: 350px;
+    }
+
+    &:nth-child(4) {
+      left: calc(50% + 170px);
+    }
+
+    &:nth-child(5) {
+      left: calc(50% + 320px);
+    }
+
+    &:nth-child(6) {
+      left: calc(50% + 450px);
+    }
+  }
+
+  .nav {
+    right: 2%;
+  }
+}
+
+// Mobile portrait
+@include respond-to(xs) {
+  .content-panel {
+    padding: 0 $spacing-sm;
+    margin: $spacing-sm auto;
+  }
+
+  .content-title {
+    font-size: $font-size-md;
+    letter-spacing: $letter-spacing-tight;
+  }
+
+  .content-description {
+    font-size: $font-size-sm;
+    line-height: $line-height-base;
+  }
+
+  .slider {
+    height: 300px;
+  }
+
+  .item {
+    width: 120px;
+    height: 180px;
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      height: 300px;
+    }
+
+    &:nth-child(4) {
+      left: calc(50% + 140px);
+    }
+
+    &:nth-child(5) {
+      left: calc(50% + 260px);
+    }
+
+    &:nth-child(6) {
+      left: calc(50% + 360px);
+    }
+  }
+
+  .nav {
+    right: 5%;
+    bottom: $spacing-md;
+    top: auto;
+    transform: none;
+  }
+
+  .card-title-mini {
+    font-size: 0.7rem;
+  }
+
+  .card-description-mini {
+    font-size: 0.55rem;
+  }
+}

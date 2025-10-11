@@ -1,5 +1,13 @@
 module.exports = {
-  plugins: [
-    require('autoprefixer')(),
-  ],
-};
+  plugins: {
+    autoprefixer: {
+      overrideBrowserslist: [
+        '> 1%',
+        'last 2 versions',
+        'Firefox ESR',
+        'not dead',
+        'IE 11'
+      ]
+    }
+  }
+}

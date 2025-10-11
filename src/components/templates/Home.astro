@@ -1,0 +1,91 @@
+---
+// src/components/templates/Home.astro
+import Header from '../molecules/Header.astro';
+import Sidebar from '../molecules/SideBar.astro';
+import TabContent from '../organisms/TabContent.astro';
+import AboutSection from '../organisms/AboutSection.astro';
+import Carousel from '../organisms/Carousel.astro';
+import { projects, experiences } from '../../lib/data.ts';
+import '../../styles/Home.scss';
+
+// Configuración de navegación
+const tabs = [
+  { id: 'tab-1', label: 'ABOUT ME', active: false },
+  { id: 'tab-2', label: 'PROJECTS', active: true },
+  { id: 'tab-3', label: 'EXPERIENCE', active: false }
+];
+
+const socialLinks = [
+  { icon: 'facebook', href: '#', label: 'Facebook' },
+  { icon: 'linkedin', href: '#', label: 'LinkedIn' },
+  { icon: 'instagram', href: '#', label: 'Instagram' }
+];
+
+const aboutParagraphs = [
+  'Versatile web designer with experience in graphic and web design. My dedication to continually learning about new web design trends and concepts has made me a professional capable of facing any challenge.',
+  'I also have 10 years of experience in sales, so I can help clients solve business problems with technological solutions.',
+  'In the field of web development I like to create relevant and original products that improve brand recognition, maintaining a creative mindset that helps companies stay updated in a constantly evolving market.'
+];
+---
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Portfolio - Joalodev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="hero">
+      <Header socialLinks={socialLinks} />
+
+      <div class="hero--wrp">
+        <div class="hero__block sidebar-section">
+          <div class="hero__block--left">
+            <Sidebar tabs={tabs} resumeLink="#" />
+          </div>
+        </div>
+
+        <div class="hero__block content-section">
+          <div class="hero__block--cont">
+            <!-- About Me Tab -->
+            <TabContent tabId="tab-1" active={false}>
+              <div class="tab-center">
+                <AboutSection paragraphs={aboutParagraphs} />
+              </div>
+            </TabContent>
+
+            <!-- Projects Tab -->
+            <TabContent tabId="tab-2" active={true}>
+              <Carousel items={projects} showButtons={true} />
+            </TabContent>
+
+            <!-- Experience Tab -->
+            <TabContent tabId="tab-3" active={false}>
+              <Carousel items={experiences} showButtons={false} />
+            </TabContent>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script type="module">
+  $(".js-sidebar--li").click(function (e) {
+    e.preventDefault();
+    const target = $(this).data("target");
+
+    $(".js-sidebar--li").removeClass("active");
+    $(".js-tab-slider").removeClass("active");
+
+    $(this).addClass("active");
+    $(".js-tab-slider#" + target).addClass("active");
+  });
+</script>

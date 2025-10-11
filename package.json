@@ -1,5 +1,5 @@
 {
-  "name": "former-force",
+  "name": "portfolio-joalodev",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,9 +10,7 @@
   },
   "dependencies": {
     "acorn": "^8.15.0",
-    "astro": "^5.14.1"
-  },
-  "devDependencies": {
+    "astro": "^5.14.1",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
     "sass": "^1.93.2"

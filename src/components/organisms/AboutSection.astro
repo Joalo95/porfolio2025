@@ -1,0 +1,116 @@
+---
+// src/components/organisms/AboutSection.astro
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  paragraphs: string[];
+}
+
+const { 
+  title = 'ABOUT ME',
+  subtitle = 'Web Developer & Student',
+  paragraphs 
+} = Astro.props;
+---
+
+<div class="about-content">
+  <div class="about-header">
+    <h1 class="about-title">{title}</h1>
+    <div class="about-subtitle">{subtitle}</div>
+  </div>
+  
+  <div class="about-description">
+    {paragraphs.map((text) => (
+      <p class="about-text">{text}</p>
+    ))}
+  </div>
+</div>
+
+<style>
+  .about-content {
+    width: 100%;
+    max-width: 800px;
+    padding: 3rem;
+    margin-top: 80px;
+  }
+
+  .about-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .about-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #00f0ff;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    text-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+  }
+
+  .about-subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+  }
+
+  .about-description {
+    margin-bottom: 2rem;
+  }
+
+  .about-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1.5rem;
+    text-align: justify;
+  }
+
+  @media (max-width: 992px) {
+    .about-content {
+      padding: 2rem;
+    }
+
+    .about-title {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-content {
+      padding: 1.5rem;
+    }
+
+    .about-title {
+      font-size: 1.5rem;
+      letter-spacing: 3px;
+    }
+
+    .about-subtitle {
+      font-size: 1rem;
+    }
+
+    .about-text {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-title {
+      font-size: 1.2rem;
+    }
+
+    .about-subtitle {
+      font-size: 0.9rem;
+    }
+
+    .about-text {
+      font-size: 0.8rem;
+    }
+  }
+</style>
